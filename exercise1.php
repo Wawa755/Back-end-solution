@@ -27,9 +27,7 @@
 			<li>$_2text</li>
 			<li>$_text3</li>
 			<li>$firstsentence</li>
-			<li>$animal</li>
-
-        
+			<li>$animal</li> 
     </ul>  
 
 </body>
