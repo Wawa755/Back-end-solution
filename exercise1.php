@@ -23,6 +23,12 @@
 	<ul>
         <li>Debug this page so the script runs without error</li>
         <li>Print all the variables in a unordered list below:</li>
+			<li>$text</li>
+			<li>$_2text</li>
+			<li>$_text3</li>
+			<li>$firstsentence</li>
+			<li>$animal</li>
+
         
     </ul>  
 
