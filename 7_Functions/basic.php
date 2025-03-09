@@ -31,6 +31,15 @@ if (isEven($number)) {
     echo $number . " is odd.";
 }
 
+//extension
+function stringLeUp($infoString) {
+    $length = strlen($infoString);
+    $uppercase = strtoupper($infoString);
+    return array('length' => $length, 'uppercase' => $uppercase);
+}
+
+$String = "We can be heroes, just for one day";
+$result3 = stringLeUp($String);
 ?>
 
 <!DOCTYPE html>
@@ -43,5 +52,11 @@ if (isEven($number)) {
 <body>
     <p><?= "The sum of " . $number1 . " and " . $number2 . " is: " . $result; ?></p>
     <p><?= "The product of " . $number1 . " and " . $number2 . " is: " . $result2; ?></p>
+    <p>
+        <?php 
+        echo "Length: " . $result3['length']. "<br>";
+        echo "Uppercase: " . $result3['uppercase']; 
+        ?>
+    </p>
 </body>
 </html>
