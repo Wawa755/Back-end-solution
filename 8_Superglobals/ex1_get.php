@@ -92,6 +92,69 @@ if (isset($_GET['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $pageTitle ?></title>
+    
+</head>
+
+<body>
+    <?php if ($showOverview) : ?>
+        <h1><?= $pageTitle ?></h1>
+
+        <div class="searchbar">
+            <form action="ex1_get.php" method="get">
+                <input type="text" name="search" placeholder="Search articles...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['search'])) : ?>
+        <?php if ($searchMessage) : ?>
+            <p><?= $searchMessage ?></p>
+        <?php else : ?>
+            <h2>Search Results:</h2>
+            <div class="article-container">
+                <?php foreach ($searchResults as $result) : ?>
+                    <?php $article = $result['article']; $id = $result['id']; ?>
+                    <div class="article">
+                        <h2><?= $article['title'] ?></h2>
+                        <p>Date: <?= $article['date'] ?></p>
+                        <img src="<?= $article['image'] ?>" alt="<?= $article['imageDescription'] ?>">
+                        <p><?= substr($article['content'], 0, 50) . '...' ?></p>
+                        <button><a href="ex1_get.php?id=<?= $id ?>">Read more</a></button>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+    <?php elseif (!$showOverview && $articleContent !== null) : ?>
+        <div class="article">
+            <h2><?= $article['title'] ?></h2>
+            <p>Date: <?= $article['date'] ?></p>
+            <?php
+            $paragraphs = explode("\n\n", htmlspecialchars($articleContent));
+            foreach ($paragraphs as $paragraph) {
+                echo '<p>' . trim(nl2br($paragraph)) . '</p>';
+            }
+            ?>
+            <img src="<?= $article['image'] ?>" alt="<?= $article['imageDescription'] ?>">
+        </div>
+        <button> <p><a href="ex1_get.php">Back to overview</a></p></button>
+
+    <?php else : ?>
+        <div class="article-container">
+            <?php foreach ($articles as $key => $article) : ?>
+                <div class="article">
+                    <h2><?= $article['title'] ?></h2>
+                    <p>Date: <?= $article['date'] ?></p>
+                    <img src="<?= $article['image'] ?>" alt="<?= $article['imageDescription'] ?>">
+                    <p><?= substr($article['content'], 0, 50) . '...' ?></p>
+                    <button><a href="ex1_get.php?id=<?= $key ?>">Read more</a></button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+
     <style>
         *{
             font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -156,66 +219,5 @@ if (isset($_GET['search'])) {
             }
         <?php endif; ?>
     </style>
-</head>
-
-<body>
-    <?php if ($showOverview) : ?>
-        <h1><?= $pageTitle ?></h1>
-
-        <div class="searchbar">
-            <form action="ex1_get.php" method="get">
-                <input type="text" name="search" placeholder="Search articles...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    <?php endif; ?>
-
-    <?php if (isset($_GET['search'])) : ?>
-        <?php if ($searchMessage) : ?>
-            <p><?= $searchMessage ?></p>
-        <?php else : ?>
-            <h2>Search Results:</h2>
-            <div class="article-container">
-                <?php foreach ($searchResults as $result) : ?>
-                    <?php $article = $result['article']; $id = $result['id']; ?>
-                    <div class="article">
-                        <h2><?= $article['title'] ?></h2>
-                        <p>Date: <?= $article['date'] ?></p>
-                        <img src="<?= $article['image'] ?>" alt="<?= $article['imageDescription'] ?>">
-                        <p><?= substr($article['content'], 0, 50) . '...' ?></p>
-                        <button><a href="ex1_get.php?id=<?= $id ?>">Read more</a></button>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-
-    <?php elseif (!$showOverview && $articleContent !== null) : ?>
-        <div class="article">
-            <h2><?= $article['title'] ?></h2>
-            <p>Date: <?= $article['date'] ?></p>
-            <?php
-            $paragraphs = explode("\n\n", htmlspecialchars($articleContent));
-            foreach ($paragraphs as $paragraph) {
-                echo '<p>' . trim(nl2br($paragraph)) . '</p>';
-            }
-            ?>
-            <img src="<?= $article['image'] ?>" alt="<?= $article['imageDescription'] ?>">
-        </div>
-        <button> <p><a href="ex1_get.php">Back to overview</a></p></button>
-
-    <?php else : ?>
-        <div class="article-container">
-            <?php foreach ($articles as $key => $article) : ?>
-                <div class="article">
-                    <h2><?= $article['title'] ?></h2>
-                    <p>Date: <?= $article['date'] ?></p>
-                    <img src="<?= $article['image'] ?>" alt="<?= $article['imageDescription'] ?>">
-                    <p><?= substr($article['content'], 0, 50) . '...' ?></p>
-                    <button><a href="ex1_get.php?id=<?= $key ?>">Read more</a></button>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-
 </body>
 </html>
