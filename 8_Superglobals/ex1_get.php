@@ -64,7 +64,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-//Searchbar
+//SEARCHBAR
 $searchResults = [];
 $searchMessage = null;
 
