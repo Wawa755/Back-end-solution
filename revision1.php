@@ -3,17 +3,24 @@ $iframeContent = '';
 $listContent = '';
 
 function showList($dir) {
-    $phpFiles = glob($dir . '/*.php');
-    if ($phpFiles) {
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+    $phpFiles = [];
+    foreach ($files as $file) {
+        if ($file->isFile() && $file->getExtension() === 'php') {
+            $phpFiles[] = $file->getPathname(); 
+        }
+    }
+
+    if (!empty($phpFiles)) {
         $list = "<ul>";
-        foreach ($phpFiles as $file) {
-            $filename = basename($file);
-            $list .= '<li>' . $filename . '</li>'; // Display filename without link
+        foreach ($phpFiles as $filepath) {
+            $filename = basename($filepath);
+            $list .= '<li><a href="' . $filepath . '">' . $filename . '</a></li>'; 
         }
         $list .= "</ul>";
         return $list;
     } else {
-        return "<p>No PHP files found in the directory.</p>";
+        return "<p>No PHP files found in the directory or its subdirectories.</p>";
     }
 }
 
@@ -23,10 +30,10 @@ if (isset($_GET['link'])) {
             $iframeContent = '<iframe src="back-end_api_development.pdf" width="1000" height="750"></iframe>';
             break;
         case 'examples':
-            $listContent = showList('examples');
+            $listContent = showList('.');
             break;
         case 'assignments':
-            $listContent = showList('assignments');
+            $listContent = showList('.');
             break;
         default:
             $iframeContent = '';
@@ -63,6 +70,5 @@ if (isset($_GET['link'])) {
     <?php echo $iframeContent; ?>
     <?php echo $listContent; ?>
 
-    
 </body>
 </html>
