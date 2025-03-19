@@ -1,13 +1,14 @@
 <?php
 $iframeContent = '';
 $listContent = '';
+$searchResult = ''; 
 
 function showList($dir) {
     $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
     $phpFiles = [];
     foreach ($files as $file) {
         if ($file->isFile() && $file->getExtension() === 'php') {
-            $phpFiles[] = $file->getPathname(); 
+            $phpFiles[] = $file->getPathname();
         }
     }
 
@@ -15,13 +16,27 @@ function showList($dir) {
         $list = "<ul>";
         foreach ($phpFiles as $filepath) {
             $filename = basename($filepath);
-            $list .= '<li><a href="' . $filepath . '">' . $filename . '</a></li>'; 
+            $list .= '<li><a href="' . $filepath . '">' . $filename . '</a></li>';
         }
         $list .= "</ul>";
         return $list;
     } else {
         return "<p>No PHP files found in the directory or its subdirectories.</p>";
     }
+}
+
+function searchFiles($searchTerm, $dir) {
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+    $results = [];
+    foreach ($files as $file) {
+        if ($file->isFile() && $file->getExtension() === 'php') {
+            $filename = $file->getFilename();
+            if (stripos($filename, $searchTerm) !== false) {
+                $results[] = $file->getPathname();
+            }
+        }
+    }
+    return $results;
 }
 
 if (isset($_GET['link'])) {
@@ -39,6 +54,21 @@ if (isset($_GET['link'])) {
             $iframeContent = '';
             $listContent = '';
             break;
+    }
+}
+
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $searchResults = searchFiles($searchTerm, '.'); 
+    if (!empty($searchResults)) {
+        $searchResult = "<h2>Search results for: " . htmlspecialchars($searchTerm) . "</h2><ul>";
+        foreach ($searchResults as $filepath) {
+            $filename = basename($filepath);
+            $searchResult .= '<li><a href="' . $filepath . '">' . $filename . '</a></li>';
+        }
+        $searchResult .= "</ul>";
+    } else {
+        $searchResult = "<p>No files found containing '" . htmlspecialchars($searchTerm) . "'.</p>";
     }
 }
 ?>
@@ -69,6 +99,7 @@ if (isset($_GET['link'])) {
 
     <?php echo $iframeContent; ?>
     <?php echo $listContent; ?>
+    <?php echo $searchResult; ?>
 
 </body>
 </html>
