@@ -75,7 +75,7 @@
 
     <form action="ex3_add.php" method="POST">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>" required><br><br>
+        <input type="text" id="username" name="username" value="<?= isset($_POST['username']) ?  ($_POST['username']) : '' ?>" required><br><br>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br><br>

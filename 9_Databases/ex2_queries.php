@@ -87,14 +87,14 @@
     <h2>Tracks with 'you' in the title:</h2>
     <ul>
         <?php foreach ($tracksWithYou as $track): ?>
-            <li><?= htmlspecialchars($track['Name']) ?></li>
+            <li><?=  ($track['Name']) ?></li>
         <?php endforeach; ?>
     </ul>
     
     <h2>Tracks with 'you' and 'i' in the title:</h2>
     <ul>
         <?php foreach ($tracksWithYouAndI as $track): ?>
-            <li><?= htmlspecialchars($track['Name']) ?></li>
+            <li><?=  ($track['Name']) ?></li>
         <?php endforeach; ?>
     </ul>
     
@@ -103,14 +103,14 @@
     <h2>Tracks and albums with 'you' and 'i' in title linked to 'chron' or 'vol':</h2>
     <ul>
         <?php foreach ($tracksAlbumsWithYouAndIInChronVol as $row): ?>
-            <li>Track: <?= htmlspecialchars($row['TrackName']) ?> | Album: <?= htmlspecialchars($row['AlbumTitle']) ?></li>
+            <li>Track: <?=  ($row['TrackName']) ?> | Album: <?=  ($row['AlbumTitle']) ?></li>
         <?php endforeach; ?>
     </ul>
 
     <h2>Playlists containing 'I Put a Spell on You':</h2>
     <ul>
         <?php foreach ($playlistsWithSpell as $playlist): ?>
-            <li><?= htmlspecialchars($playlist['Name']) ?></li>
+            <li><?=  ($playlist['Name']) ?></li>
         <?php endforeach; ?>
     </ul>
 
@@ -120,7 +120,7 @@
     <h2>Songs in the first playlist:</h2>
     <ol>
         <?php foreach ($songsInFirstPlaylist as $song): ?>
-            <li><?= htmlspecialchars($song['Name']) ?></li>
+            <li><?=  ($song['Name']) ?></li>
         <?php endforeach; ?>
     </ol>
 </body>
