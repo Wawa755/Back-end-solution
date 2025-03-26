@@ -1,5 +1,5 @@
 <?php
-//connecting database and checking connection
+//connecting database and checking connnection
 try {
     $db = new PDO('sqlite:chinook.sqlite');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
